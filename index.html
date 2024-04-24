@@ -49,17 +49,16 @@
                         <input class="input-with-icon" type="text" placeholder="Cerca o inizia una nuova chat">
                     </div>
                     <div class="column-chats flex column">
-                        <div v-for="(contact, index) in contacts" :key="index" class="flex avatars">
+                        <div @click="changeActiveContact(index)" v-for="(contact, index) in contacts" :key="index" class="flex avatars">
                             <div class="flex">
-                                <img class="avatar1" src="img/avatar_1.jpg" alt="Michele avatar1">
+                                <img class="avatar1" :src="`img/avatar${contact.avatar}.jpg`" alt="Michele avatar1">
                                 <div>
                                     <h4>{{ contact.name }}</h4>
                                     <span class="lorem">{{ contact.messages[contact.messages.length - 1].message
                                         }}</span>
                                 </div>
                             </div>
-                            <span class="lorem">{{ contact.messages[contact.messages.length - 1].date
-                            }}</span>
+                            <span class="lorem">{{ formatDateTime(contact.messages[contact.messages.length - 1].date) }}</span>
                         </div>
                         <hr>
                     </div>
@@ -71,9 +70,9 @@
                 <!-- header colonna destra -->
                 <div class="info-chat flex header-color">
                     <div class="michele flex">
-                        <img class="avatar1" src="./img/avatar_1.jpg" alt="Michele avatar1">
+                        <img class="avatar1" :src="getContactAvatar(contacts[activeIndex])" alt="Michele avatar1">
                         <div class="michele-access">
-                            <h4 class=>Michele</h4>
+                            <h4 class=>{{ contacts[activeIndex].name }}</h4>
                             <span class="last-access">Ultimo accesso oggi alle 16:26</span>
                         </div>
                     </div>
@@ -85,25 +84,13 @@
                 </div>
 
                 <div class="container-message">
-                    <div v-for="(contact, index) in contacts" :key="index" class="row-first-message flex">
-                        <div class="first-message flex">
-                            <p>{{ contact.messages[0].message
+                    <div :class="curMessage.status" v-for="curMessage in contacts[activeIndex].messages" class="row-first-message flex">
+                        <div class="first-message second-message flex">
+                            <p>{{ curMessage.message
                             }}</p>
                             <div class="chevron-time column flex">
                                 <i class="fa-solid fa-chevron-down"></i>
-                                <span class="time">{{ contact.messages[0].date
-                                }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div v-for="(contact, index) in contacts" :key="index" class="row-second-message flex">
-                        <div class="second-message flex">
-                            <p>{{ contact.messages[1].message
-                            }}</p>
-                            <div class="chevron-time column flex">
-                                <i class="fa-solid fa-chevron-down"></i>
-                                <span class="time">{{ contact.messages[1].date
-                                }}</span>
+                                <span class="time">{{ formatDateTime(curMessage.date) }}</span>
                             </div>
                         </div>
                     </div>
@@ -119,6 +106,9 @@
         <!-- /main -->
     </div>
 
+    <!-- luxon -->
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.4/build/global/luxon.min.js"></script>
+    <!-- JS -->
     <script src="./js/script.js"></script>
 </body>
 

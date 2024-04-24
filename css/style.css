@@ -246,23 +246,27 @@ i.fa-solid.fa-bell-slash {
     height: 100%;
 }
 
-.row-first-message {
+.row-first-message.sent {
     justify-content: flex-end;
+    /* background-color:  rgb(213 249 186); */
+    /* border-radius: 10px; */
+    /* width: 70%; */
+    margin: 10px;
+    /* padding: 10px; */
 }
 
 .first-message {
     background-color:  rgb(213 249 186);
+    /* width: 70%; */
     border-radius: 10px;
     padding: 10px;
-    margin: 30px 0 20px;
-    width: 70%;
 }
     
-.second-message {
+.received .second-message {
     background-color: rgb(255 255 255);
     border-radius: 10px;
     padding: 10px;
-    width: 70%;
+    /* width: 70%; */
 }
 
 .chevron-time {
@@ -298,6 +302,12 @@ i.fa-solid.fa-bell-slash {
     display: none;
     font-size: 1.5rem;
     color: rgb(116, 117, 117);
+}
+
+@media screen and (min-width: 380px) {
+    .container-message-bar {
+        width: 100%;
+    }
 }
 
 @media screen and (min-width: 768px) {

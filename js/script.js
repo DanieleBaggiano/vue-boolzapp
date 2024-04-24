@@ -1,3 +1,10 @@
+const dt = luxon.DateTime;
+// FORMAT
+const now = dt.now();
+console.log(dt.now());
+
+console.log(now.setLocale('it').toLocaleString(dt.DATETIME_HUGE));
+
 const { createApp } = Vue;
 
 createApp({
@@ -6,7 +13,7 @@ createApp({
             contacts: [
                 {
                     name: 'Michele',
-                    avatar: "./img/avatar_1.jpg",
+                    avatar: `_1`,
                     visible: true,
                     messages: [
                         {
@@ -165,7 +172,22 @@ createApp({
                         }
                     ],
                 }
-            ]
+            ],
+            activeIndex: 0
+        }
+    },
+    methods: {
+        getContactAvatar: function (contact) {
+            return "img/avatar" + contact.avatar + ".jpg";
+        },
+        
+        changeActiveContact: function (clickedIndex) {
+            this.activeIndex = clickedIndex;
+        },
+
+        formatDateTime(dateTimeString) {
+            const dateTime = luxon.DateTime.fromFormat(dateTimeString, 'dd/MM/yyyy HH:mm:ss');
+            return dateTime.toLocaleString(luxon.DateTime.DATETIME_MED);
         }
     }
 }).mount("#app");
