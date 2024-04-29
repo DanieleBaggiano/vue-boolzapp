@@ -49,7 +49,8 @@
                         <input class="input-with-icon" type="text" placeholder="Cerca o inizia una nuova chat">
                     </div>
                     <div class="column-chats flex column">
-                        <div @click="changeActiveContact(index)" v-for="(contact, index) in contacts" :key="index" class="flex avatars">
+                        <div @click="changeActiveContact(index)" v-for="(contact, index) in contacts" :key="index"
+                            class="flex avatars">
                             <div class="flex">
                                 <img class="avatar1" :src="`img/avatar${contact.avatar}.jpg`" alt="Michele avatar1">
                                 <div>
@@ -58,7 +59,8 @@
                                         }}</span>
                                 </div>
                             </div>
-                            <span class="lorem">{{ formatDateTime(contact.messages[contact.messages.length - 1].date) }}</span>
+                            <span class="lorem">{{ formatDateTime(contact.messages[contact.messages.length - 1].date)
+                                }}</span>
                         </div>
                         <hr>
                     </div>
@@ -84,10 +86,11 @@
                 </div>
 
                 <div class="container-message">
-                    <div :class="curMessage.status" v-for="curMessage in contacts[activeIndex].messages" class="row-first-message flex">
+                    <div :class="curMessage.status" v-for="curMessage in contacts[activeIndex].messages"
+                        class="row-first-message flex">
                         <div class="first-message second-message flex">
                             <p>{{ curMessage.message
-                            }}</p>
+                                }}</p>
                             <div class="chevron-time column flex">
                                 <i class="fa-solid fa-chevron-down"></i>
                                 <span class="time">{{ formatDateTime(curMessage.date) }}</span>
@@ -98,7 +101,7 @@
 
                 <div class="write-bar">
                     <span class="smile"><i class="fa-regular fa-face-smile"></i></span>
-                    <input class="write-message" type="text" placeholder="Scrivi un messaggio">
+                    <input v-model="newMessage" @keyup.enter="sendMessage" class="write-message" type="text" placeholder="Scrivi un messaggio">
                     <span class="microphone"><i class="fa-solid fa-microphone"></i></span>
                 </div>
             </div>
