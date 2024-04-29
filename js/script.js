@@ -1,15 +1,14 @@
 const dt = luxon.DateTime;
 // FORMAT
-const now = dt.now();
+// const now = dt.now();
 
-console.log(now.setLocale('it').toLocaleString(dt.DATETIME_HUGE));
+// console.log(now.setLocale('it').toLocaleString(dt.DATETIME_HUGE));
 
 const { createApp } = Vue;
 
 createApp({
     data() {
         return {
-            newMessage: '',
             contacts: [
                 {
                     name: 'Michele',
@@ -173,33 +172,57 @@ createApp({
                     ],
                 }
             ],
-            activeIndex: 0
+            activeIndex: 0,
+            newMessageText: ""
+        }
+    },
+    computed: {
+        activeContact: function () {
+            return this.contacts[this.activeIndex];
         }
     },
     methods: {
         getContactAvatar: function (contact) {
             return "img/avatar" + contact.avatar + ".jpg";
         },
-        
+
         changeActiveContact: function (clickedIndex) {
             this.activeIndex = clickedIndex;
         },
 
         formatDateTime(dateTimeString) {
-            const dateTime = luxon.DateTime.fromFormat(dateTimeString, 'dd/MM/yyyy HH:mm:ss');
-            return dateTime.toLocaleString(luxon.DateTime.DATETIME_MED);
+            const dateTime = dt.fromFormat(dateTimeString, 'dd/MM/yyyy HH:mm:ss');
+            return dateTime.toLocaleString(dt.DATETIME_SHORT_WITH_SECONDS);
         },
 
-        sendMessage: function() {
-            if (this.newMessage !== "") {
+        sendMessage: function () {
+            if (this.newMessageText !== "") {
+                const nowDate = dt.now().setLocale('it').toLocaleString(dt.DATETIME_SHORT_WITH_SECONDS);
+
                 const newMessage = {
-                    message: this.newMessage,
-                    status: 'sent',
-                    date: new Date()
-                };
-                this.activeIndex.messages.push(newMessage);
-                this.newMessage = '';
-            }
-        }
-    }
+                    date: nowDate,
+                    message: this.newMessageText,
+                    status: 'sent'
+                }
+                this.activeContact.messages.push(newMessage);
+
+                const index = this.activeIndex
+
+                setTimeout(() => {
+                    console.log(this);
+                    this.recieveMessage(index);
+                }, 4000);
+            };
+        },
+        recieveMessage: function(response) {
+            const nowDate = dt.now().setLocale('it').toLocaleString(dt.DATETIME_SHORT_WITH_SECONDS);
+
+            const newMessage = {
+                date: nowDate,
+                message: "okk",
+                status: 'received'
+            };
+            this.contacts[response].messages.push(newMessage);
+        },
+    },
 }).mount("#app");

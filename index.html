@@ -72,9 +72,9 @@
                 <!-- header colonna destra -->
                 <div class="info-chat flex header-color">
                     <div class="michele flex">
-                        <img class="avatar1" :src="getContactAvatar(contacts[activeIndex])" alt="Michele avatar1">
+                        <img class="avatar1" :src="getContactAvatar(activeContact)" alt="Michele avatar1">
                         <div class="michele-access">
-                            <h4 class=>{{ contacts[activeIndex].name }}</h4>
+                            <h4 class=>{{ activeContact.name }}</h4>
                             <span class="last-access">Ultimo accesso oggi alle 16:26</span>
                         </div>
                     </div>
@@ -86,14 +86,14 @@
                 </div>
 
                 <div class="container-message">
-                    <div :class="curMessage.status" v-for="curMessage in contacts[activeIndex].messages"
+                    <div :class="curMessage.status" v-for="curMessage in activeContact.messages"
                         class="row-first-message flex">
                         <div class="first-message second-message flex">
                             <p>{{ curMessage.message
                                 }}</p>
                             <div class="chevron-time column flex">
                                 <i class="fa-solid fa-chevron-down"></i>
-                                <span class="time">{{ formatDateTime(curMessage.date) }}</span>
+                                <span class="time">{{ curMessage.date }}</span>
                             </div>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
 
                 <div class="write-bar">
                     <span class="smile"><i class="fa-regular fa-face-smile"></i></span>
-                    <input v-model="newMessage" @keyup.enter="sendMessage" class="write-message" type="text" placeholder="Scrivi un messaggio">
+                    <input v-model.trim="newMessageText" @keyup.enter="sendMessage" class="write-message" type="text" placeholder="Scrivi un messaggio">
                     <span class="microphone"><i class="fa-solid fa-microphone"></i></span>
                 </div>
             </div>
